@@ -12,9 +12,9 @@ const contactRoute = require('./routes/contact')
 const config = require('./config/config')
 
 app.use(express.json())
-app.use(cors({ origin: ['https://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
+app.use(cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
 
-app.options("*", cors({ origin: ['https://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
+app.options("*", cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
 
 app.use('/api',userRoute)
 app.use('/api/product',productRoute)
@@ -26,7 +26,7 @@ app.use('/api/forget_password',userRoute)
 app.use('/api/contact',contactRoute)
 app.listen(8080,async()=>{
     try {
-       mongoose.connect(config.mongoDBUrl)
+       mongoose.connect('mongodb+srv://sushantshekhar:sushantshekhar@cluster0.jrb6jlo.mongodb.net/darvi?retryWrites=true&w=majority')
     console.log("server running at port 8080")
     } catch (error) {
        console.log(error) 
