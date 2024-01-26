@@ -27,6 +27,7 @@ const path=require('path')
 const user_controller=require("../controllers/userController")
 const verifyToken = require('../middlewares/auth')
 const userModel = require('../models/userModel')
+
 userRoute.get('/:id',async(req,res)=>{
     try {
         const userId=req.params.id;

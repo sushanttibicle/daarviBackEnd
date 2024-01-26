@@ -16,6 +16,15 @@ app.use(cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharma
 
 app.options("*", cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
 
+app.get('/',async(req,res)=>{
+   try {
+
+       res.status(200).send('Welcome to daarvi....')
+       
+   } catch (error) {
+       throw error
+   }
+})
 app.use('/api',userRoute)
 app.use('/api/product',productRoute)
 app.use('/api/verify_email',verifyEmailRoute)
