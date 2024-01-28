@@ -9,11 +9,19 @@ const orderRouter = require('./routes/order')
 const verifyEmailRoute = require('./routes/emailverify')
 const reviewRouter = require('./routes/review')
 const contactRoute = require('./routes/contact')
-const config = require('./config/config')
+
+var http = require('http'),
+    fs = require('fs'),
+    ccav = require('./ccavutil.js'),
+    qs = require('querystring'),
+    ccavReqHandler = require('./ccavRequestHandler.js'),
+    ccavResHandler = require('./ccavResponseHandler.js');
+const config = require('./config/config.js')
+
 app.use(express.static('public'));
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
-app.use(express.json())
+
 app.use(cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
 
 app.options("*", cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
@@ -38,17 +46,15 @@ app.use('/api/contact',contactRoute)
 
 app.get('/api/about/payment_CCAvenue', function (req, res){
     console.log("api/about")
-   res.render('dataFrom.html');
+   res.render('./dataFrom.html');
 });
 
 app.post('/ccavRequestHandler', function (request, response){
-    console.log("api/ccavRequestHandler")
-    ccavReqHandler.postReq(request, response);
+ccavReqHandler.postReq(request, response);
 });
 
 
 app.post('/ccavResponseHandler', function (request, response){
-    console.log("api/ccavResponseHandler")
     ccavResHandler.postRes(request, response);
 });
 app.listen(8080,async()=>{
