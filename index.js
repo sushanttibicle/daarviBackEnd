@@ -10,13 +10,15 @@ const verifyEmailRoute = require('./routes/emailverify')
 const reviewRouter = require('./routes/review')
 const contactRoute = require('./routes/contact')
 const config = require('./config/config')
-
+app.use(express.static('public'));
+app.set('views', __dirname + '/public');
+app.engine('html', require('ejs').renderFile);
 app.use(express.json())
 app.use(cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
 
 app.options("*", cors({ origin: ['https://daarvipharmaceuticals.com','http://daarvipharmaceuticals.com','https://daarvipharmaceutical.vercel.app','http://localhost:3000'], optionsSuccessStatus: 200 }));
 
-app.get('/',async(req,res)=>{
+app.get('/api/ping',async(req,res)=>{
    try {
 
        res.status(200).send('Welcome to daarvi....')
@@ -33,6 +35,22 @@ app.use('/api/order',orderRouter)
 app.use('/api/review',reviewRouter)
 app.use('/api/forget_password',userRoute)
 app.use('/api/contact',contactRoute)
+
+app.get('/api/about/payment_CCAvenue', function (req, res){
+    console.log("api/about")
+   res.render('dataFrom.html');
+});
+
+app.post('/ccavRequestHandler', function (request, response){
+    console.log("api/ccavRequestHandler")
+    ccavReqHandler.postReq(request, response);
+});
+
+
+app.post('/ccavResponseHandler', function (request, response){
+    console.log("api/ccavResponseHandler")
+    ccavResHandler.postRes(request, response);
+});
 app.listen(8080,async()=>{
     try {
        mongoose.connect('mongodb+srv://sushantshekhar:sushantshekhar@cluster0.jrb6jlo.mongodb.net/darvi?retryWrites=true&w=majority')
